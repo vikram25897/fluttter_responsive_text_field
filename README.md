@@ -28,5 +28,6 @@ class Home extends StatelessWidget {
   }
 }
 ```
-##Demo
+### Demo
+
 ![responsive_text_field demo](responsive_text_field.gif)
