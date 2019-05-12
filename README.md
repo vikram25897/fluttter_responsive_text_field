@@ -2,7 +2,7 @@
 
 A Flutter plugin to create ResponsiveTextField that auto resizes itself based on the input.
 It will increase its maxLines when the text overflows and decreases its maxLines when the text underflow.
-####Note: Provide a well calculated width to the widget after subtracting all the paddings and margins for it to work as expected.
+#### Note: Provide a well calculated width to the widget after subtracting all the paddings and margins for it to work as expected.
 ## Example
 You can just use it the same way you would use a TextField with just four required parameters:
 * minLines

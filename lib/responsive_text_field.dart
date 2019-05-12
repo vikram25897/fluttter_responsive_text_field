@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
 class ResponsiveTextField extends StatefulWidget {
   const ResponsiveTextField({
     Key key,
@@ -45,7 +46,7 @@ class ResponsiveTextField extends StatefulWidget {
     this.onTap,
     this.buildCounter,
     this.scrollPhysics,
-  }) : assert(textAlign != null),
+  })  : assert(textAlign != null),
         assert(autofocus != null),
         assert(obscureText != null),
         assert(autocorrect != null),
@@ -55,11 +56,14 @@ class ResponsiveTextField extends StatefulWidget {
         assert(maxLines != null && maxLines > 1),
         assert(minLines != null && minLines > 0),
         assert(
-        (maxLines != null) && (minLines != null) && (maxLines >= minLines),
-        'minLines can\'t be greater than maxLines',
+          (maxLines != null) && (minLines != null) && (maxLines >= minLines),
+          'minLines can\'t be greater than maxLines',
         ),
-        assert(maxLength == null || maxLength == ResponsiveTextField.noMaxLength || maxLength > 0),
-        keyboardType = keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        assert(maxLength == null ||
+            maxLength == ResponsiveTextField.noMaxLength ||
+            maxLength > 0),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
   final TextEditingController controller;
   final double availableWidth;
@@ -95,6 +99,7 @@ class ResponsiveTextField extends StatefulWidget {
   bool get selectionEnabled {
     return enableInteractiveSelection ?? !obscureText;
   }
+
   final GestureTapCallback onTap;
   final InputCounterWidgetBuilder buildCounter;
   final ScrollPhysics scrollPhysics;
@@ -105,68 +110,108 @@ class ResponsiveTextField extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<TextEditingController>('controller', controller, defaultValue: null));
-    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode, defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>('enabled', enabled, defaultValue: null));
-    properties.add(DiagnosticsProperty<InputDecoration>('decoration', decoration, defaultValue: const InputDecoration()));
-    properties.add(DiagnosticsProperty<TextInputType>('keyboardType', keyboardType, defaultValue: TextInputType.text));
-    properties.add(DiagnosticsProperty<TextStyle>('style', style, defaultValue: null));
-    properties.add(DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false));
-    properties.add(DiagnosticsProperty<bool>('obscureText', obscureText, defaultValue: false));
-    properties.add(DiagnosticsProperty<bool>('autocorrect', autocorrect, defaultValue: true));
+    properties.add(DiagnosticsProperty<TextEditingController>(
+        'controller', controller,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty<bool>('enabled', enabled, defaultValue: null));
+    properties.add(DiagnosticsProperty<InputDecoration>(
+        'decoration', decoration,
+        defaultValue: const InputDecoration()));
+    properties.add(DiagnosticsProperty<TextInputType>(
+        'keyboardType', keyboardType,
+        defaultValue: TextInputType.text));
+    properties.add(
+        DiagnosticsProperty<TextStyle>('style', style, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false));
+    properties.add(DiagnosticsProperty<bool>('obscureText', obscureText,
+        defaultValue: false));
+    properties.add(DiagnosticsProperty<bool>('autocorrect', autocorrect,
+        defaultValue: true));
     properties.add(IntProperty('maxLines', maxLines, defaultValue: 1));
     properties.add(IntProperty('minLines', minLines, defaultValue: null));
     properties.add(IntProperty('maxLength', maxLength, defaultValue: null));
-    properties.add(FlagProperty('maxLengthEnforced', value: maxLengthEnforced, defaultValue: true, ifFalse: 'maxLength not enforced'));
-    properties.add(EnumProperty<TextInputAction>('textInputAction', textInputAction, defaultValue: null));
-    properties.add(EnumProperty<TextCapitalization>('textCapitalization', textCapitalization, defaultValue: TextCapitalization.none));
-    properties.add(EnumProperty<TextAlign>('textAlign', textAlign, defaultValue: TextAlign.start));
-    properties.add(EnumProperty<TextDirection>('textDirection', textDirection, defaultValue: null));
-    properties.add(DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0));
-    properties.add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius, defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('cursorColor', cursorColor, defaultValue: null));
-    properties.add(DiagnosticsProperty<Brightness>('keyboardAppearance', keyboardAppearance, defaultValue: null));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('scrollPadding', scrollPadding, defaultValue: const EdgeInsets.all(20.0)));
-    properties.add(FlagProperty('selectionEnabled', value: selectionEnabled, defaultValue: true, ifFalse: 'selection disabled'));
-    properties.add(DiagnosticsProperty<ScrollPhysics>('scrollPhysics', scrollPhysics, defaultValue: null));
+    properties.add(FlagProperty('maxLengthEnforced',
+        value: maxLengthEnforced,
+        defaultValue: true,
+        ifFalse: 'maxLength not enforced'));
+    properties.add(EnumProperty<TextInputAction>(
+        'textInputAction', textInputAction,
+        defaultValue: null));
+    properties.add(EnumProperty<TextCapitalization>(
+        'textCapitalization', textCapitalization,
+        defaultValue: TextCapitalization.none));
+    properties.add(EnumProperty<TextAlign>('textAlign', textAlign,
+        defaultValue: TextAlign.start));
+    properties.add(EnumProperty<TextDirection>('textDirection', textDirection,
+        defaultValue: null));
+    properties
+        .add(DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0));
+    properties.add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty<Color>('cursorColor', cursorColor,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty<Brightness>(
+        'keyboardAppearance', keyboardAppearance,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>(
+        'scrollPadding', scrollPadding,
+        defaultValue: const EdgeInsets.all(20.0)));
+    properties.add(FlagProperty('selectionEnabled',
+        value: selectionEnabled,
+        defaultValue: true,
+        ifFalse: 'selection disabled'));
+    properties.add(DiagnosticsProperty<ScrollPhysics>(
+        'scrollPhysics', scrollPhysics,
+        defaultValue: null));
   }
 }
 
-class _ResponsiveTextFieldState extends State<ResponsiveTextField> with AutomaticKeepAliveClientMixin {
-  final GlobalKey<EditableTextState> _editableTextKey = GlobalKey<EditableTextState>();
+class _ResponsiveTextFieldState extends State<ResponsiveTextField>
+    with AutomaticKeepAliveClientMixin {
+  final GlobalKey<EditableTextState> _editableTextKey =
+      GlobalKey<EditableTextState>();
   Set<InteractiveInkFeature> _splashes;
   InteractiveInkFeature _currentSplash;
   int lines;
   TextEditingController _controller;
-  TextEditingController get _effectiveController => widget.controller ?? _controller;
+  TextEditingController get _effectiveController =>
+      widget.controller ?? _controller;
 
   FocusNode _focusNode;
-  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode());
 
-  bool get needsCounter => widget.maxLength != null
-      && widget.decoration != null
-      && widget.decoration.counterText == null;
+  bool get needsCounter =>
+      widget.maxLength != null &&
+      widget.decoration != null &&
+      widget.decoration.counterText == null;
 
   InputDecoration _getEffectiveDecoration() {
-    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
     final ThemeData themeData = Theme.of(context);
-    final InputDecoration effectiveDecoration = (widget.decoration ?? const InputDecoration())
-        .applyDefaults(themeData.inputDecorationTheme)
-        .copyWith(
-      enabled: widget.enabled,
-      hintMaxLines: widget.decoration?.hintMaxLines ?? widget.maxLines,
-    );
+    final InputDecoration effectiveDecoration =
+        (widget.decoration ?? const InputDecoration())
+            .applyDefaults(themeData.inputDecorationTheme)
+            .copyWith(
+              enabled: widget.enabled,
+              hintMaxLines: widget.decoration?.hintMaxLines ?? widget.maxLines,
+            );
 
     // No need to build anything if counter or counterText were given directly.
-    if (effectiveDecoration.counter != null || effectiveDecoration.counterText != null)
-      return effectiveDecoration;
+    if (effectiveDecoration.counter != null ||
+        effectiveDecoration.counterText != null) return effectiveDecoration;
 
     // If buildCounter was provided, use it to generate a counter widget.
     Widget counter;
     final int currentLength = _effectiveController.value.text.runes.length;
-    if (effectiveDecoration.counter == null
-        && effectiveDecoration.counterText == null
-        && widget.buildCounter != null) {
+    if (effectiveDecoration.counter == null &&
+        effectiveDecoration.counterText == null &&
+        widget.buildCounter != null) {
       final bool isFocused = _effectiveFocusNode.hasFocus;
       counter = Semantics(
         container: true,
@@ -191,15 +236,17 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     if (widget.maxLength > 0) {
       // Show the maxLength in the counter
       counterText += '/${widget.maxLength}';
-      final int remaining = (widget.maxLength - currentLength).clamp(0, widget.maxLength);
-      semanticCounterText = localizations.remainingTextFieldCharacterCount(remaining);
+      final int remaining =
+          (widget.maxLength - currentLength).clamp(0, widget.maxLength);
+      semanticCounterText =
+          localizations.remainingTextFieldCharacterCount(remaining);
 
       // Handle length exceeds maxLength
       if (_effectiveController.value.text.runes.length > widget.maxLength) {
         return effectiveDecoration.copyWith(
           errorText: effectiveDecoration.errorText ?? '',
-          counterStyle: effectiveDecoration.errorStyle
-              ?? themeData.textTheme.caption.copyWith(color: themeData.errorColor),
+          counterStyle: effectiveDecoration.errorStyle ??
+              themeData.textTheme.caption.copyWith(color: themeData.errorColor),
           counterText: counterText,
           semanticCounterText: semanticCounterText,
         );
@@ -211,42 +258,40 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
       semanticCounterText: semanticCounterText,
     );
   }
+
   Function(String) onChanged;
   @override
   void initState() {
     super.initState();
     lines = widget.minLines;
-    onChanged = (s){
+    onChanged = (s) {
       _checkSize(s);
-      if(widget.onChanged!=null)
-        widget.onChanged(s);
+      if (widget.onChanged != null) widget.onChanged(s);
     };
-    if (widget.controller == null)
-      _controller = TextEditingController();
+    if (widget.controller == null) _controller = TextEditingController();
   }
+
   void _checkSize(final String s) {
     final String zs = s.trim();
-    final TextSpan tp = TextSpan(
-        text: zs,
-        style: widget.style
-    );
-    if(_textFits(tp,lines)){
-      if(lines>(widget.minLines ?? 1)){
-        if(_textFits(tp, lines-1)){
+    final TextSpan tp = TextSpan(text: zs, style: widget.style);
+    if (_textFits(tp, lines)) {
+      if (lines > (widget.minLines ?? 1)) {
+        if (_textFits(tp, lines - 1)) {
           setState(() {
             --lines;
           });
         }
       }
-    } else{
-      if(lines<(widget.maxLines ?? double.maxFinite.toInt())){
+    } else {
+      if (lines < (widget.maxLines ?? double.maxFinite.toInt())) {
         setState(() {
           ++lines;
         });
       }
     }
   }
-  bool _textFits(TextSpan text,int lines) {
+
+  bool _textFits(TextSpan text, int lines) {
     var tp = TextPainter(
       text: text,
       locale: Locale.cachedLocale,
@@ -255,10 +300,10 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
       textScaleFactor: 1,
       maxLines: lines,
     );
-    tp.layout(maxWidth: widget.availableWidth-4);
-    return !(tp.didExceedMaxLines ||
-        tp.width > widget.availableWidth);
+    tp.layout(maxWidth: widget.availableWidth - 4);
+    return !(tp.didExceedMaxLines || tp.width > widget.availableWidth);
   }
+
   @override
   void didUpdateWidget(ResponsiveTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -267,7 +312,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     else if (widget.controller != null && oldWidget.controller == null)
       _controller = null;
     final bool isEnabled = widget.enabled ?? widget.decoration?.enabled ?? true;
-    final bool wasEnabled = oldWidget.enabled ?? oldWidget.decoration?.enabled ?? true;
+    final bool wasEnabled =
+        oldWidget.enabled ?? oldWidget.decoration?.enabled ?? true;
     if (wasEnabled && !isEnabled) {
       _effectiveFocusNode.unfocus();
     }
@@ -283,7 +329,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     _editableTextKey.currentState?.requestKeyboard();
   }
 
-  void _handleSelectionChanged(TextSelection selection, SelectionChangedCause cause) {
+  void _handleSelectionChanged(
+      TextSelection selection, SelectionChangedCause cause) {
     // iOS cursor doesn't move via a selection handle. The scroll happens
     // directly from new text selection changes.
     switch (Theme.of(context).platform) {
@@ -302,7 +349,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     final MaterialInkController inkController = Material.of(context);
     final ThemeData themeData = Theme.of(context);
     final BuildContext editableContext = _editableTextKey.currentContext;
-    final RenderBox referenceBox = InputDecorator.containerOf(editableContext) ?? editableContext.findRenderObject();
+    final RenderBox referenceBox =
+        InputDecorator.containerOf(editableContext) ??
+            editableContext.findRenderObject();
     final Offset position = referenceBox.globalToLocal(globalPosition);
     final Color color = themeData.splashColor;
 
@@ -311,8 +360,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
       if (_splashes != null) {
         assert(_splashes.contains(splash));
         _splashes.remove(splash);
-        if (_currentSplash == splash)
-          _currentSplash = null;
+        if (_currentSplash == splash) _currentSplash = null;
         updateKeepAlive();
       } // else we're probably in deactivate()
     }
@@ -332,7 +380,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     return splash;
   }
 
-  RenderEditable get _renderEditable => _editableTextKey.currentState.renderEditable;
+  RenderEditable get _renderEditable =>
+      _editableTextKey.currentState.renderEditable;
 
   void _handleTapDown(TapDownDetails details) {
     _renderEditable.handleTapDown(details);
@@ -363,8 +412,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     }
     _requestKeyboard();
     _confirmCurrentSplash();
-    if (widget.onTap != null)
-      widget.onTap();
+    if (widget.onTap != null) widget.onTap();
   }
 
   void _handleSingleTapCancel() {
@@ -431,9 +479,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
   }
 
   void _handleMouseDragSelectionUpdate(
-      DragStartDetails startDetails,
-      DragUpdateDetails updateDetails,
-      ) {
+    DragStartDetails startDetails,
+    DragUpdateDetails updateDetails,
+  ) {
     _renderEditable.selectPositionAt(
       from: startDetails.globalPosition,
       to: updateDetails.globalPosition,
@@ -442,8 +490,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
   }
 
   void _startSplash(Offset globalPosition) {
-    if (_effectiveFocusNode.hasFocus)
-      return;
+    if (_effectiveFocusNode.hasFocus) return;
     final InteractiveInkFeature splash = _createInkFeature(globalPosition);
     _splashes ??= HashSet<InteractiveInkFeature>();
     _splashes.add(splash);
@@ -468,8 +515,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     if (_splashes != null) {
       final Set<InteractiveInkFeature> splashes = _splashes;
       _splashes = null;
-      for (InteractiveInkFeature splash in splashes)
-        splash.dispose();
+      for (InteractiveInkFeature splash in splashes) splash.dispose();
       _currentSplash = null;
     }
     assert(_currentSplash == null);
@@ -484,17 +530,20 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     // assert(debugCheckHasMaterialLocalizations(context));
     assert(debugCheckHasDirectionality(context));
     assert(
-    !(widget.style != null && widget.style.inherit == false &&
-        (widget.style.fontSize == null || widget.style.textBaseline == null)),
-    'inherit false style must supply fontSize and textBaseline',
+      !(widget.style != null &&
+          widget.style.inherit == false &&
+          (widget.style.fontSize == null || widget.style.textBaseline == null)),
+      'inherit false style must supply fontSize and textBaseline',
     );
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle style = themeData.textTheme.subhead.merge(widget.style);
-    final Brightness keyboardAppearance = widget.keyboardAppearance ?? themeData.primaryColorBrightness;
+    final Brightness keyboardAppearance =
+        widget.keyboardAppearance ?? themeData.primaryColorBrightness;
     final TextEditingController controller = _effectiveController;
     final FocusNode focusNode = _effectiveFocusNode;
-    final List<TextInputFormatter> formatters = widget.inputFormatters ?? <TextInputFormatter>[];
+    final List<TextInputFormatter> formatters =
+        widget.inputFormatters ?? <TextInputFormatter>[];
     if (widget.maxLength != null && widget.maxLengthEnforced)
       formatters.add(LengthLimitingTextInputFormatter(widget.maxLength));
 
@@ -521,7 +570,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
         // This value is in device pixels, not logical pixels as is typically used
         // throughout the codebase.
         const int _iOSHorizontalOffset = -2;
-        cursorOffset = Offset(_iOSHorizontalOffset / MediaQuery.of(context).devicePixelRatio, 0);
+        cursorOffset = Offset(
+            _iOSHorizontalOffset / MediaQuery.of(context).devicePixelRatio, 0);
         break;
 
       case TargetPlatform.android:
@@ -553,7 +603,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
         minLines: widget.minLines,
         expands: false,
         selectionColor: themeData.textSelectionColor,
-        selectionControls: widget.selectionEnabled ? textSelectionControls : null,
+        selectionControls:
+            widget.selectionEnabled ? textSelectionControls : null,
         onChanged: onChanged,
         onSelectionChanged: _handleSelectionChanged,
         onEditingComplete: widget.onEditingComplete,
@@ -577,7 +628,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
 
     if (widget.decoration != null) {
       child = AnimatedBuilder(
-        animation: Listenable.merge(<Listenable>[ focusNode, controller ]),
+        animation: Listenable.merge(<Listenable>[focusNode, controller]),
         builder: (BuildContext context, Widget child) {
           return InputDecorator(
             decoration: _getEffectiveDecoration(),
@@ -596,14 +647,16 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     return Semantics(
       onTap: () {
         if (!_effectiveController.selection.isValid)
-          _effectiveController.selection = TextSelection.collapsed(offset: _effectiveController.text.length);
+          _effectiveController.selection =
+              TextSelection.collapsed(offset: _effectiveController.text.length);
         _requestKeyboard();
       },
       child: IgnorePointer(
         ignoring: !(widget.enabled ?? widget.decoration?.enabled ?? true),
         child: TextSelectionGestureDetector(
           onTapDown: _handleTapDown,
-          onForcePressStart: forcePressEnabled ? _handleForcePressStarted : null,
+          onForcePressStart:
+              forcePressEnabled ? _handleForcePressStarted : null,
           onSingleTapUp: _handleSingleTapUp,
           onSingleTapCancel: _handleSingleTapCancel,
           onSingleLongTapStart: _handleSingleLongTapStart,
@@ -619,4 +672,3 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField> with Automati
     );
   }
 }
-
