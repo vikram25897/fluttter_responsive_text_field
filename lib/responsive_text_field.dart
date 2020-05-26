@@ -402,6 +402,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         case TargetPlatform.fuchsia:
           _renderEditable.selectPosition(cause: SelectionChangedCause.tap);
           break;
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
       }
     }
     _requestKeyboard();
@@ -427,6 +430,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
           _renderEditable.selectWord(cause: SelectionChangedCause.longPress);
           Feedback.forLongPress(context);
           break;
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
       }
     }
     _confirmCurrentSplash();
@@ -449,6 +455,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
             cause: SelectionChangedCause.longPress,
           );
           break;
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
       }
     }
   }
@@ -531,7 +540,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     );
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle style = themeData.textTheme.subhead.merge(widget.style);
+    final TextStyle style = themeData.textTheme.subtitle1.merge(widget.style);
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? themeData.primaryColorBrightness;
     final TextEditingController controller = _effectiveController;
@@ -576,6 +585,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         cursorOpacityAnimates = false;
         cursorColor ??= themeData.cursorColor;
         break;
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
     }
 
     Widget child = RepaintBoundary(

@@ -1,6 +1,6 @@
 name: responsive_text_field
 description: A new Flutter package for creating ResponsiveTextField. This widget changes its maxLines based on the user input.
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/vikram25897/fluttter_responsive_text_field
 
 environment:
