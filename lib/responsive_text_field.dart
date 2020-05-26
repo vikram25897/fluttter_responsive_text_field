@@ -294,7 +294,6 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   bool _textFits(TextSpan text, int lines) {
     var tp = TextPainter(
       text: text,
-      locale: Locale.cachedLocale,
       textAlign: widget.textAlign ?? TextAlign.left,
       textDirection: widget.textDirection ?? TextDirection.ltr,
       textScaleFactor: 1,
@@ -333,15 +332,10 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
       TextSelection selection, SelectionChangedCause cause) {
     // iOS cursor doesn't move via a selection handle. The scroll happens
     // directly from new text selection changes.
-    switch (Theme.of(context).platform) {
-      case TargetPlatform.iOS:
-        if (cause == SelectionChangedCause.longPress) {
-          _editableTextKey.currentState?.bringIntoView(selection.base);
-        }
-        return;
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-      // Do nothing.
+    if(Theme.of(context).platform == TargetPlatform.iOS){
+      if (cause == SelectionChangedCause.longPress) {
+        _editableTextKey.currentState?.bringIntoView(selection.base);
+      }
     }
   }
 
@@ -620,7 +614,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         backgroundCursorColor: CupertinoColors.inactiveGray,
         scrollPadding: widget.scrollPadding,
         keyboardAppearance: keyboardAppearance,
-        enableInteractiveSelection: widget.enableInteractiveSelection,
+        enableInteractiveSelection: widget.enableInteractiveSelection ?? true,
         dragStartBehavior: widget.dragStartBehavior,
         scrollPhysics: widget.scrollPhysics,
       ),
