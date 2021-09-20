@@ -623,7 +623,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         rendererIgnoresPointer: true,
         cursorWidth: widget.cursorWidth,
         cursorRadius: cursorRadius,
-        cursorColor: cursorColor!,
+        cursorColor: cursorColor == null ? CupertinoTheme.of(context).primaryColor: cursorColor!,
         cursorOpacityAnimates: cursorOpacityAnimates,
         cursorOffset: cursorOffset,
         paintCursorAboveText: paintCursorAboveText,
