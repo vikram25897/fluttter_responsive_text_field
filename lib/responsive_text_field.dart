@@ -12,22 +12,22 @@ import 'package:flutter/widgets.dart';
 
 class ResponsiveTextField extends StatefulWidget {
   const ResponsiveTextField({
-    Key key,
+    Key? key,
     this.controller,
     this.focusNode,
     this.decoration = const InputDecoration(),
-    TextInputType keyboardType,
+    TextInputType? keyboardType,
     this.textInputAction,
     this.textCapitalization = TextCapitalization.none,
-    @required this.style,
+    required this.style,
     this.strutStyle,
     this.textAlign = TextAlign.start,
     this.textDirection,
     this.autofocus = false,
     this.obscureText = false,
     this.autocorrect = true,
-    @required this.maxLines,
-    @required this.minLines,
+    required this.maxLines,
+    required this.minLines,
     this.maxLength,
     this.maxLengthEnforced = true,
     this.onChanged,
@@ -35,7 +35,7 @@ class ResponsiveTextField extends StatefulWidget {
     this.onSubmitted,
     this.inputFormatters,
     this.enabled,
-    @required this.availableWidth,
+    required this.availableWidth,
     this.cursorWidth = 2.0,
     this.cursorRadius,
     this.cursorColor,
@@ -65,44 +65,44 @@ class ResponsiveTextField extends StatefulWidget {
         keyboardType = keyboardType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final double availableWidth;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final InputDecoration decoration;
   final TextInputType keyboardType;
-  final TextInputAction textInputAction;
+  final TextInputAction? textInputAction;
   final TextCapitalization textCapitalization;
   final TextStyle style;
-  final StrutStyle strutStyle;
+  final StrutStyle? strutStyle;
   final TextAlign textAlign;
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
   final bool autofocus;
   final bool obscureText;
   final bool autocorrect;
   final int maxLines;
   final int minLines;
   static const int noMaxLength = -1;
-  final int maxLength;
+  final int? maxLength;
   final bool maxLengthEnforced;
-  final ValueChanged<String> onChanged;
-  final VoidCallback onEditingComplete;
-  final ValueChanged<String> onSubmitted;
-  final List<TextInputFormatter> inputFormatters;
-  final bool enabled;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback? onEditingComplete;
+  final ValueChanged<String>? onSubmitted;
+  final List<TextInputFormatter>? inputFormatters;
+  final bool? enabled;
   final double cursorWidth;
-  final Radius cursorRadius;
-  final Color cursorColor;
-  final Brightness keyboardAppearance;
+  final Radius? cursorRadius;
+  final Color? cursorColor;
+  final Brightness? keyboardAppearance;
   final EdgeInsets scrollPadding;
-  final bool enableInteractiveSelection;
+  final bool? enableInteractiveSelection;
   final DragStartBehavior dragStartBehavior;
   bool get selectionEnabled {
     return enableInteractiveSelection ?? !obscureText;
   }
 
-  final GestureTapCallback onTap;
-  final InputCounterWidgetBuilder buildCounter;
-  final ScrollPhysics scrollPhysics;
+  final GestureTapCallback? onTap;
+  final InputCounterWidgetBuilder? buildCounter;
+  final ScrollPhysics? scrollPhysics;
 
   @override
   _ResponsiveTextFieldState createState() => _ResponsiveTextFieldState();
@@ -174,14 +174,14 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     with AutomaticKeepAliveClientMixin {
   final GlobalKey<EditableTextState> _editableTextKey =
       GlobalKey<EditableTextState>();
-  Set<InteractiveInkFeature> _splashes;
-  InteractiveInkFeature _currentSplash;
-  int lines;
-  TextEditingController _controller;
-  TextEditingController get _effectiveController =>
+  Set<InteractiveInkFeature>? _splashes;
+  InteractiveInkFeature? _currentSplash;
+  int? lines;
+  TextEditingController? _controller;
+  TextEditingController? get _effectiveController =>
       widget.controller ?? _controller;
 
-  FocusNode _focusNode;
+  FocusNode? _focusNode;
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
 
@@ -208,7 +208,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
 
     // If buildCounter was provided, use it to generate a counter widget.
     Widget counter;
-    final int currentLength = _effectiveController.value.text.runes.length;
+    final int currentLength = _effectiveController!.value.text.runes.length;
     if (effectiveDecoration.counter == null &&
         effectiveDecoration.counterText == null &&
         widget.buildCounter != null) {
@@ -216,7 +216,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
       counter = Semantics(
         container: true,
         liveRegion: isFocused,
-        child: widget.buildCounter(
+        child: widget.buildCounter!(
           context,
           currentLength: currentLength,
           maxLength: widget.maxLength,
@@ -233,20 +233,20 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     String semanticCounterText = '';
 
     // Handle a real maxLength (positive number)
-    if (widget.maxLength > 0) {
+    if (widget.maxLength! > 0) {
       // Show the maxLength in the counter
       counterText += '/${widget.maxLength}';
       final int remaining =
-          (widget.maxLength - currentLength).clamp(0, widget.maxLength);
+          (widget.maxLength! - currentLength).clamp(0, widget.maxLength!);
       semanticCounterText =
           localizations.remainingTextFieldCharacterCount(remaining);
 
       // Handle length exceeds maxLength
-      if (_effectiveController.value.text.runes.length > widget.maxLength) {
+      if (_effectiveController!.value.text.runes.length > widget.maxLength!) {
         return effectiveDecoration.copyWith(
           errorText: effectiveDecoration.errorText ?? '',
           counterStyle: effectiveDecoration.errorStyle ??
-              themeData.textTheme.caption.copyWith(color: themeData.errorColor),
+              themeData.textTheme.caption!.copyWith(color: themeData.errorColor),
           counterText: counterText,
           semanticCounterText: semanticCounterText,
         );
@@ -259,14 +259,14 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     );
   }
 
-  Function(String) onChanged;
+  Function(String)? onChanged;
   @override
   void initState() {
     super.initState();
     lines = widget.minLines;
     onChanged = (s) {
       _checkSize(s);
-      if (widget.onChanged != null) widget.onChanged(s);
+      if (widget.onChanged != null) widget.onChanged!(s);
     };
     if (widget.controller == null) _controller = TextEditingController();
   }
@@ -275,15 +275,15 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     final String zs = s.trim();
     final TextSpan tp = TextSpan(text: zs, style: widget.style);
     if (_textFits(tp, lines)) {
-      if (lines > (widget.minLines ?? 1)) {
-        if (_textFits(tp, lines - 1)) {
+      if (lines! > (widget.minLines ?? 1)) {
+        if (_textFits(tp, lines! - 1)) {
           setState(() {
             --lines;
           });
         }
       }
     } else {
-      if (lines < (widget.maxLines ?? double.maxFinite.toInt())) {
+      if (lines! < (widget.maxLines ?? double.maxFinite.toInt())) {
         setState(() {
           ++lines;
         });
@@ -291,7 +291,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     }
   }
 
-  bool _textFits(TextSpan text, int lines) {
+  bool _textFits(TextSpan text, int? lines) {
     var tp = TextPainter(
       text: text,
       textAlign: widget.textAlign ?? TextAlign.left,
@@ -307,7 +307,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   void didUpdateWidget(ResponsiveTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null && oldWidget.controller != null)
-      _controller = TextEditingController.fromValue(oldWidget.controller.value);
+      _controller = TextEditingController.fromValue(oldWidget.controller!.value);
     else if (widget.controller != null && oldWidget.controller == null)
       _controller = null;
     final bool isEnabled = widget.enabled ?? widget.decoration?.enabled ?? true;
@@ -329,7 +329,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   }
 
   void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause cause) {
+      TextSelection selection, SelectionChangedCause? cause) {
     // iOS cursor doesn't move via a selection handle. The scroll happens
     // directly from new text selection changes.
     if(Theme.of(context).platform == TargetPlatform.iOS){
@@ -340,20 +340,20 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   }
 
   InteractiveInkFeature _createInkFeature(Offset globalPosition) {
-    final MaterialInkController inkController = Material.of(context);
+    final MaterialInkController inkController = Material.of(context)!;
     final ThemeData themeData = Theme.of(context);
-    final BuildContext editableContext = _editableTextKey.currentContext;
+    final BuildContext editableContext = _editableTextKey.currentContext!;
     final RenderBox referenceBox =
         InputDecorator.containerOf(editableContext) ??
-            editableContext.findRenderObject();
+            editableContext.findRenderObject() as RenderBox;
     final Offset position = referenceBox.globalToLocal(globalPosition);
     final Color color = themeData.splashColor;
 
-    InteractiveInkFeature splash;
+    InteractiveInkFeature? splash;
     void handleRemoved() {
       if (_splashes != null) {
-        assert(_splashes.contains(splash));
-        _splashes.remove(splash);
+        assert(_splashes!.contains(splash));
+        _splashes!.remove(splash);
         if (_currentSplash == splash) _currentSplash = null;
         updateKeepAlive();
       } // else we're probably in deactivate()
@@ -375,7 +375,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   }
 
   RenderEditable get _renderEditable =>
-      _editableTextKey.currentState.renderEditable;
+      _editableTextKey.currentState!.renderEditable;
 
   void _handleTapDown(TapDownDetails details) {
     _renderEditable.handleTapDown(details);
@@ -388,7 +388,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         from: details.globalPosition,
         cause: SelectionChangedCause.forcePress,
       );
-      _editableTextKey.currentState.showToolbar();
+      _editableTextKey.currentState!.showToolbar();
     }
   }
 
@@ -409,7 +409,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     }
     _requestKeyboard();
     _confirmCurrentSplash();
-    if (widget.onTap != null) widget.onTap();
+    if (widget.onTap != null) widget.onTap!();
   }
 
   void _handleSingleTapCancel() {
@@ -463,13 +463,13 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   }
 
   void _handleSingleLongTapEnd(LongPressEndDetails details) {
-    _editableTextKey.currentState.showToolbar();
+    _editableTextKey.currentState!.showToolbar();
   }
 
   void _handleDoubleTapDown(TapDownDetails details) {
     if (widget.selectionEnabled) {
       _renderEditable.selectWord(cause: SelectionChangedCause.doubleTap);
-      _editableTextKey.currentState.showToolbar();
+      _editableTextKey.currentState!.showToolbar();
     }
   }
 
@@ -496,7 +496,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     if (_effectiveFocusNode.hasFocus) return;
     final InteractiveInkFeature splash = _createInkFeature(globalPosition);
     _splashes ??= HashSet<InteractiveInkFeature>();
-    _splashes.add(splash);
+    _splashes!.add(splash);
     _currentSplash = splash;
     updateKeepAlive();
   }
@@ -511,12 +511,12 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   }
 
   @override
-  bool get wantKeepAlive => _splashes != null && _splashes.isNotEmpty;
+  bool get wantKeepAlive => _splashes != null && _splashes!.isNotEmpty;
 
   @override
   void deactivate() {
     if (_splashes != null) {
-      final Set<InteractiveInkFeature> splashes = _splashes;
+      final Set<InteractiveInkFeature> splashes = _splashes!;
       _splashes = null;
       for (InteractiveInkFeature splash in splashes) splash.dispose();
       _currentSplash = null;
@@ -540,23 +540,23 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     );
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle style = themeData.textTheme.subtitle1.merge(widget.style);
+    final TextStyle style = themeData.textTheme.subtitle1!.merge(widget.style);
     final Brightness keyboardAppearance =
         widget.keyboardAppearance ?? themeData.primaryColorBrightness;
-    final TextEditingController controller = _effectiveController;
+    final TextEditingController? controller = _effectiveController;
     final FocusNode focusNode = _effectiveFocusNode;
     final List<TextInputFormatter> formatters =
         widget.inputFormatters ?? <TextInputFormatter>[];
     if (widget.maxLength != null && widget.maxLengthEnforced)
       formatters.add(LengthLimitingTextInputFormatter(widget.maxLength));
 
-    bool forcePressEnabled;
-    TextSelectionControls textSelectionControls;
-    bool paintCursorAboveText;
-    bool cursorOpacityAnimates;
-    Offset cursorOffset;
-    Color cursorColor = widget.cursorColor;
-    Radius cursorRadius = widget.cursorRadius;
+    late bool forcePressEnabled;
+    TextSelectionControls? textSelectionControls;
+    late bool paintCursorAboveText;
+    late bool cursorOpacityAnimates;
+    Offset? cursorOffset;
+    Color? cursorColor = widget.cursorColor;
+    Radius? cursorRadius = widget.cursorRadius;
 
     switch (themeData.platform) {
       case TargetPlatform.iOS:
@@ -593,7 +593,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
     Widget child = RepaintBoundary(
       child: EditableText(
         key: _editableTextKey,
-        controller: controller,
+        controller: controller!,
         focusNode: focusNode,
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
@@ -619,7 +619,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         rendererIgnoresPointer: true,
         cursorWidth: widget.cursorWidth,
         cursorRadius: cursorRadius,
-        cursorColor: cursorColor,
+        cursorColor: cursorColor!,
         cursorOpacityAnimates: cursorOpacityAnimates,
         cursorOffset: cursorOffset,
         paintCursorAboveText: paintCursorAboveText,
@@ -634,8 +634,8 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
 
     if (widget.decoration != null) {
       child = AnimatedBuilder(
-        animation: Listenable.merge(<Listenable>[focusNode, controller]),
-        builder: (BuildContext context, Widget child) {
+        animation: Listenable.merge(<Listenable?>[focusNode, controller]),
+        builder: (BuildContext context, Widget? child) {
           return InputDecorator(
             decoration: _getEffectiveDecoration(),
             baseStyle: widget.style,
@@ -652,9 +652,9 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
 
     return Semantics(
       onTap: () {
-        if (!_effectiveController.selection.isValid)
-          _effectiveController.selection =
-              TextSelection.collapsed(offset: _effectiveController.text.length);
+        if (!_effectiveController!.selection.isValid)
+          _effectiveController!.selection =
+              TextSelection.collapsed(offset: _effectiveController!.text.length);
         _requestKeyboard();
       },
       child: IgnorePointer(
