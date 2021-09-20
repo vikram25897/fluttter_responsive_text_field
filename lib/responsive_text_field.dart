@@ -68,19 +68,19 @@ class ResponsiveTextField extends StatefulWidget {
   final TextEditingController? controller;
   final double availableWidth;
   final FocusNode? focusNode;
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
   final TextInputType keyboardType;
   final TextInputAction? textInputAction;
   final TextCapitalization textCapitalization;
   final TextStyle style;
   final StrutStyle? strutStyle;
-  final TextAlign textAlign;
+  final TextAlign? textAlign;
   final TextDirection? textDirection;
   final bool autofocus;
   final bool obscureText;
   final bool autocorrect;
-  final int maxLines;
-  final int minLines;
+  final int? maxLines;
+  final int? minLines;
   static const int noMaxLength = -1;
   final int? maxLength;
   final bool maxLengthEnforced;
@@ -278,14 +278,18 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
       if (lines! > (widget.minLines ?? 1)) {
         if (_textFits(tp, lines! - 1)) {
           setState(() {
-            --lines;
+            if(lines != null){
+              --lines;
+            }
           });
         }
       }
     } else {
       if (lines! < (widget.maxLines ?? double.maxFinite.toInt())) {
         setState(() {
-          ++lines;
+          if(lines != null){
+            ++lines;
+          }
         });
       }
     }
