@@ -188,7 +188,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
   bool get needsCounter =>
       widget.maxLength != null &&
       widget.decoration != null &&
-      widget.decoration.counterText == null;
+      widget.decoration!.counterText == null;
 
   InputDecoration _getEffectiveDecoration() {
     final MaterialLocalizations localizations =
@@ -279,7 +279,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         if (_textFits(tp, lines! - 1)) {
           setState(() {
             if(lines != null){
-              --lines;
+              lines = lines! - 1;
             }
           });
         }
@@ -288,7 +288,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
       if (lines! < (widget.maxLines ?? double.maxFinite.toInt())) {
         setState(() {
           if(lines != null){
-            ++lines;
+            lines = lines! + 1;
           }
         });
       }
@@ -604,7 +604,7 @@ class _ResponsiveTextFieldState extends State<ResponsiveTextField>
         textCapitalization: widget.textCapitalization,
         style: style,
         strutStyle: widget.strutStyle,
-        textAlign: widget.textAlign,
+        textAlign: widget.textAlign!,
         textDirection: widget.textDirection,
         autofocus: widget.autofocus,
         obscureText: widget.obscureText,
